@@ -1,0 +1,211 @@
+.appContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    /* box-sizing: border-box; */
+    /* margin: 32px 16px; */
+    /* width: 90%; */
+}
+
+.largeText {
+    font-size: 32px;
+    line-height: 43px;
+}
+
+.smallGrayText {
+    font-size: 18px;
+    line-height: 23px;
+    color: var(--gray);
+}
+
+.midLightText {
+    font-size: 24px;
+    line-height: 31px;
+    color: var(--light-gray);
+}
+
+.passwordOutputContainer {
+    background-color: var(--charcoal);
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 16px;
+}
+
+.passwordOutputContainer p {
+    color: var(--light-gray);
+}
+
+.copyContainer {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    gap: 1rem;
+}
+
+.copyContainer p {
+    align-self: center;
+    font-size: 18px;
+    line-height: 23px;
+    color: var(--light-green);
+}
+
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: var(--charcoal);
+    padding: 16px;
+    gap: 16px;
+}
+
+.lengthOutputContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.lengthText {
+    color: var(--light-gray);
+}
+
+.lengthOutput {
+    color: var(--light-green);
+}
+
+.slider {
+    width: 100%;
+    -webkit-appearance: none;
+    margin: 0;
+    padding: 16px 0;
+    background-color: var(--charcoal);
+}
+
+/* TODO: Make this work for mozilla and chrome as well */
+
+.slider::-webkit-slider-runnable-track {
+    width: 100%;
+    cursor: pointer;
+    background: linear-gradient(to right, var(--light-green) 0%, var(--light-green) 50%, var(--noire) 50%, var(--noire) 100%);
+    height: 5px;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    margin-top: -7.5px;
+}
+
+.slider::-webkit-slider-thumb:hover {
+    background-color: var(--noire);
+    border: 2px solid var(--light-green);
+}
+
+.checkboxesContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.checkboxContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 18px;
+}
+
+.checkboxContainer label {
+    color: var(--light-gray);
+    font-size: 18px;
+    line-height: 23px;
+}
+
+.checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: var(--charcoal);
+    border: 2px solid white;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    position: relative;
+    top: -1px;
+}
+
+.checkbox:checked {
+    border: none;
+    background: var(--light-green) url("/src/assets/images/icon-check.svg") 2px 4px no-repeat;
+}
+
+.strengthContainer {
+    padding: 16px;
+    align-items: center;
+    background-color: var(--noire);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.strengthOutputContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.strengthDisplayContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.strengthDisplayContainer div {
+    width: var(--bar-width);
+    height: var(--bar-height);
+}
+
+.emptyBar {
+    background-color: var(--noire);
+    box-sizing: border-box;
+    border: 2px solid white;
+}
+
+.redBar {
+    background-color: var(--red);
+}
+
+.orangeBar {
+    background-color: var(--orange);
+}
+
+.yellowBar {
+    background-color: var(--yellow);
+}
+
+.greenBar {
+    background-color: var(--light-green);
+}
+
+.button {
+    background-color: var(--light-green);
+    padding: 16px 0;
+    font-size: 18px;
+    line-height: 23px;
+    display: flex;
+    justify-content: center;
+}
+
+.buttonContentContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+}
