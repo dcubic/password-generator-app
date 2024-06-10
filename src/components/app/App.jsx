@@ -12,7 +12,24 @@ const defaultGenerationParameters = {
   includeSymbols: false,
 };
 
+const minStrengthRating = 1;
 const strengthRatings = [1, 2, 3, 4];
+
+const passwordCharacters = {
+  symbols: [
+    '!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', ':', 
+    ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~'
+  ],
+  lowercaseLetters: [
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 
+    'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+  ],
+  uppercaseLetters: [
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+  ],
+  digits: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+}
 
 const checkboxParameters = [
   {
@@ -76,28 +93,38 @@ function App() {
     }));
   }
 
+  function checkedCheckboxCount(parameters) {
+    return Object.entries(parameters)
+    .filter(([_, value]) => typeof value === 'boolean' && value)
+    .length;
+  }
+
   function handleCheckboxClick(parameterName) {
-    setGenerationParameters((oldParameters) => ({
-      ...oldParameters,
-      [parameterName]: !oldParameters[parameterName],
-    }));
+    setGenerationParameters((oldParameters) => {
+      if (checkedCheckboxCount(oldParameters) === 1 && oldParameters[parameterName]) {
+        return oldParameters;
+      } else {
+        return {
+          ...oldParameters,
+          [parameterName]: !oldParameters[parameterName],
+        };
+      }
+    });
   }
 
   function handleButtonClick(event) {
     event.preventDefault();
+
+    const generatedCharacters = Array.from({ length: generationParameters.passwordLength }, () => {
+
+    });
   }
 
-  // function passwordStrengthRating() {
-  //   const lengthContribution = if (generationParameters.length >= 
-
-
-  //   )
-  // }
-
-  const strengthRating = 3;
+  const strengthRating = Math.max(
+    checkedCheckboxCount(generationParameters), 
+    minStrengthRating
+  );
   
-  [...Array(strengthRating).fill(strengthRating), ...Array(strengthRatings.length - strengthRating).fill(0) ]
-
   function getStrengthIndicatorClass(strengthRating) {
     switch(strengthRating) {
       case 0: return styles.emptyBar;
@@ -123,7 +150,7 @@ function App() {
     <div className={styles.appContainer}>
       <h1 className={`${styles.smallText} ${styles.gray}`}>Password Generator</h1>
       <div className={styles.passwordOutputContainer}>
-        <p className={styles.largeText}>TODO</p>
+        <p className={styles.largeText}>AAAABBBBCCCC</p>
         <div className={styles.copyContainer}>
           <p className={`${styles.smallText} ${styles.copiedText}`}>COPIED</p>
           <CopyIcon />
@@ -137,8 +164,8 @@ function App() {
           </div>
           <input
             type="range"
-            min="0"
-            max="20"
+            min="8"
+            max="12"
             ref={sliderRef}
             value={generationParameters.passwordLength}
             onChange={(event) => handleSliderChange(event.target.value)}
@@ -157,7 +184,7 @@ function App() {
                 onClick={() => handleCheckboxClick(parameters.parameterName)}
                 className={styles.checkbox}
               ></input>
-              <label htmlFor={`${parameters.id}-checkbox`} className={`${styles.nearWhite} ${styles.smallText}`}>
+              <label htmlFor={`${parameters.id}-checkbox`} className={`${styles.nearWhite} ${styles.smallText} ${styles.inactiveLabel}`}>
                 {parameters.labelText}
               </label>
             </div>

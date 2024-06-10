@@ -4,6 +4,7 @@
     justify-content: center;
     align-items: center;
     gap: 16px;
+    width: 100%;
     max-width: 540px;
     margin: auto 16px;
 }
@@ -137,6 +138,10 @@
     background: var(--light-green) url("/src/assets/images/icon-check.svg") 2px 4px no-repeat;
 }
 
+.inactiveLabel {
+    pointer-events: none;
+}
+
 .strengthContainer {
     padding: 16px;
     align-items: center;
@@ -188,7 +193,7 @@
 
 .button {
     background-color: var(--light-green);
-    border: none;
+    border: 2px solid transparent;
     padding: 16px 0;
     display: flex;
     justify-content: center;
