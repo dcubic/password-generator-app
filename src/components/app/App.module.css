@@ -4,25 +4,27 @@
     justify-content: center;
     align-items: center;
     gap: 16px;
-    /* box-sizing: border-box; */
-    /* margin: 32px 16px; */
-    /* width: 90%; */
+    max-width: 540px;
+    margin: auto 16px;
 }
 
 .largeText {
-    font-size: 32px;
-    line-height: 43px;
+    font-size: 24px;
 }
 
-.smallGrayText {
+.mediumText {
     font-size: 18px;
-    line-height: 23px;
+}
+
+.smallText {
+    font-size: 16px;
+}
+
+.gray {
     color: var(--gray);
 }
 
-.midLightText {
-    font-size: 24px;
-    line-height: 31px;
+.nearWhite {
     color: var(--light-gray);
 }
 
@@ -47,11 +49,9 @@
     gap: 1rem;
 }
 
-.copyContainer p {
+.copiedText {
     align-self: center;
-    font-size: 18px;
-    line-height: 23px;
-    color: var(--light-green);
+    color: var(--light-green) !important;
 }
 
 .formContainer {
@@ -68,10 +68,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-}
-
-.lengthText {
-    color: var(--light-gray);
+    align-items: center;
 }
 
 .lengthOutput {
@@ -86,7 +83,7 @@
     background-color: var(--charcoal);
 }
 
-/* TODO: Make this work for mozilla and chrome as well */
+/* TODO: Make this work for mozilla as well */
 
 .slider::-webkit-slider-runnable-track {
     width: 100%;
@@ -112,19 +109,14 @@
 .checkboxesContainer {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
+    margin-bottom: 16px;
 }
 
 .checkboxContainer {
     display: flex;
     flex-direction: row;
     gap: 18px;
-}
-
-.checkboxContainer label {
-    color: var(--light-gray);
-    font-size: 18px;
-    line-height: 23px;
 }
 
 .checkbox {
@@ -158,7 +150,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 10px;
+    gap: 16px;
 }
 
 .strengthDisplayContainer {
@@ -196,11 +188,19 @@
 
 .button {
     background-color: var(--light-green);
+    border: none;
     padding: 16px 0;
-    font-size: 18px;
-    line-height: 23px;
     display: flex;
     justify-content: center;
+    box-shadow: none;
+    transform: none;
+}
+
+.button:hover {
+    color: var(--light-green);
+    background-color: var(--charcoal);
+    border: 2px solid var(--light-green);
+    cursor: pointer;
 }
 
 .buttonContentContainer {
@@ -208,4 +208,31 @@
     flex-direction: row;
     align-items: center;
     gap: 16px;
+}
+
+.rightArrowIcon path {
+    fill: var(--noire);
+}
+
+.button:hover path {
+    fill: var(--light-green);
+}
+
+@media screen and (min-width: 572px) {
+
+    .appContainer {
+        margin: auto;
+    }
+
+    .largeText {
+        font-size: 32px;
+    }
+    
+    .mediumText {
+        font-size: 24px;
+    }
+    
+    .smallText {
+        font-size: 18px;
+    }
 }

@@ -87,6 +87,13 @@ function App() {
     event.preventDefault();
   }
 
+  // function passwordStrengthRating() {
+  //   const lengthContribution = if (generationParameters.length >= 
+
+
+  //   )
+  // }
+
   const strengthRating = 3;
   
   [...Array(strengthRating).fill(strengthRating), ...Array(strengthRatings.length - strengthRating).fill(0) ]
@@ -114,19 +121,19 @@ function App() {
 
   return (
     <div className={styles.appContainer}>
-      <h1 className={styles.smallGrayText}>Password Generator</h1>
+      <h1 className={`${styles.smallText} ${styles.gray}`}>Password Generator</h1>
       <div className={styles.passwordOutputContainer}>
         <p className={styles.largeText}>TODO</p>
         <div className={styles.copyContainer}>
-          <p>COPIED</p>
+          <p className={`${styles.smallText} ${styles.copiedText}`}>COPIED</p>
           <CopyIcon />
         </div>
       </div>
       <form className={styles.formContainer}>
         <div>
           <div className={styles.lengthOutputContainer}>
-            <p className={styles.lengthText}>Character Length</p>
-            <p className={styles.lengthOutput}>{generationParameters.passwordLength}</p>
+            <p className={`${styles.smallText} ${styles.nearWhite}`}>Character Length</p>
+            <p className={`${styles.largeText} ${styles.lengthOutput}`}>{generationParameters.passwordLength}</p>
           </div>
           <input
             type="range"
@@ -150,16 +157,16 @@ function App() {
                 onClick={() => handleCheckboxClick(parameters.parameterName)}
                 className={styles.checkbox}
               ></input>
-              <label htmlFor={`${parameters.id}-checkbox`}>
+              <label htmlFor={`${parameters.id}-checkbox`} className={`${styles.nearWhite} ${styles.smallText}`}>
                 {parameters.labelText}
               </label>
             </div>
           ))}
         </div>
         <div className={styles.strengthContainer}>
-          <p className={styles.smallGrayText}>STRENGTH</p>
+          <p className={`${styles.smallText} ${styles.gray}`}>STRENGTH</p>
           <div className={styles.strengthOutputContainer}>
-            <p className={styles.midLightText}>{getStrengthText()}</p>
+            <p className={`${styles.mediumText} ${styles.nearWhite}`}>{getStrengthText()}</p>
             <div className={styles.strengthDisplayContainer}>
               {
                 [
@@ -170,10 +177,10 @@ function App() {
             </div>
           </div>
         </div>
-        <button type="button" className={styles.button} onClick={handleButtonClick}>
+        <button type="button" className={`${styles.button} ${styles.smallText}`} onClick={handleButtonClick}>
           <div className={styles.buttonContentContainer}>
             <p>GENERATE</p>
-            <RightArrowIcon />
+            <RightArrowIcon className={styles.rightArrowIcon}/>
           </div>
         </button>
       </form>
