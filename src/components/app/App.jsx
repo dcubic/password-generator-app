@@ -12,24 +12,17 @@ const defaultGenerationParameters = {
   includeSymbols: false,
 };
 
-const minStrengthRating = 1;
-const strengthRatings = [1, 2, 3, 4];
+const strengthRatingMax = 4;
 
-const passwordCharacters = {
-  symbols: [
-    '!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', ':', 
-    ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~'
-  ],
-  lowercaseLetters: [
-    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 
-    'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
-  ],
-  uppercaseLetters: [
-    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
-  ],
-  digits: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-}
+const symbols = [
+  '!', '"', '#', '$', '%', '&', "'", '(',
+  ')', '*', '+', ',', '-', '.', '/', ':', 
+  ';', '<', '=', '>', '?', '@', '[', '\\',
+  ']', '^', '_', '`', '{', '|', '}', '~'
+]
+
+const ALPHABET_SIZE = 26;
+const DIGIT_COUNT = 10;
 
 const checkboxParameters = [
   {
@@ -58,6 +51,8 @@ function App() {
   const [generationParameters, setGenerationParameters] = useState(
     defaultGenerationParameters
   );
+  const [generatedPassword, setGeneratedPassword] = useState('');
+  const [isCopiedVisible, setIsCopiedVisible] = useState(false);
   const sliderRef = useRef(null);
 
   useEffect(() => {
@@ -99,31 +94,56 @@ function App() {
     .length;
   }
 
+  function handleCopyClick() {
+    copyToClipboard();
+    setIsCopiedVisible(true);
+    setTimeout(() => {
+      setIsCopiedVisible(false);
+    }, 500);
+  }
+
+  async function copyToClipboard() {
+    try {
+      await navigator.clipboard.writeText(generatedPassword);
+    } catch(error) {
+      console.error('Failed to copy text, ', error);
+    }
+  }
+
   function handleCheckboxClick(parameterName) {
-    setGenerationParameters((oldParameters) => {
-      if (checkedCheckboxCount(oldParameters) === 1 && oldParameters[parameterName]) {
-        return oldParameters;
-      } else {
-        return {
-          ...oldParameters,
-          [parameterName]: !oldParameters[parameterName],
-        };
-      }
-    });
+    setGenerationParameters(oldParameters => ({
+      ...oldParameters,
+      [parameterName]: !oldParameters[parameterName]
+    }));
   }
 
   function handleButtonClick(event) {
     event.preventDefault();
 
-    const generatedCharacters = Array.from({ length: generationParameters.passwordLength }, () => {
+    const characterOptions = Object.entries(generationParameters)
+      .filter(([_, checked]) => typeof checked === 'boolean' && checked)
+      .map(([key, _]) => key);
 
-    });
+    if (characterOptions.length >= 1) {
+      const generatedCharacters = Array.from({ length: generationParameters.passwordLength }, () => {
+        const characterOption = characterOptions[Math.floor(Math.random() * characterOptions.length)];
+        
+        if (characterOption === 'includeUppercase') {
+          return String.fromCharCode('A'.charCodeAt(0) + Math.floor(Math.random() * ALPHABET_SIZE));
+        } else if (characterOption === 'includeLowercase') {
+          return String.fromCharCode('a'.charCodeAt(0) + Math.floor(Math.random() * ALPHABET_SIZE));
+        } else if (characterOption === 'includeNumbers') {
+          return String.fromCharCode('0'.charCodeAt(0) + Math.floor(Math.random() * DIGIT_COUNT));
+        } else {
+          return symbols[Math.floor(Math.random() * symbols.length)];
+        }
+      });
+  
+      setGeneratedPassword(generatedCharacters.join(""));
+    }
   }
 
-  const strengthRating = Math.max(
-    checkedCheckboxCount(generationParameters), 
-    minStrengthRating
-  );
+  const strengthRating = checkedCheckboxCount(generationParameters);
   
   function getStrengthIndicatorClass(strengthRating) {
     switch(strengthRating) {
@@ -150,10 +170,10 @@ function App() {
     <div className={styles.appContainer}>
       <h1 className={`${styles.smallText} ${styles.gray}`}>Password Generator</h1>
       <div className={styles.passwordOutputContainer}>
-        <p className={styles.largeText}>AAAABBBBCCCC</p>
+        <p className={styles.largeText}>{generatedPassword}</p>
         <div className={styles.copyContainer}>
-          <p className={`${styles.smallText} ${styles.copiedText}`}>COPIED</p>
-          <CopyIcon />
+          <p className={`${styles.smallText} ${styles.copiedText} ${isCopiedVisible ? styles.visible : ''}`}>COPIED</p>
+          <CopyIcon className={styles.copyIcon} onClick={handleCopyClick}/>
         </div>
       </div>
       <form className={styles.formContainer}>
@@ -198,7 +218,7 @@ function App() {
               {
                 [
                   ...Array(strengthRating).fill(strengthRating),
-                  ...Array(strengthRatings.length - strengthRating).fill(0)
+                  ...Array(strengthRatingMax - strengthRating).fill(0)
                 ].map(strengthRating => <div className={getStrengthIndicatorClass(strengthRating)}></div>)
               }
             </div>
